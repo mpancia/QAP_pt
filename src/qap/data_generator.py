@@ -1,28 +1,22 @@
-#!/usr/bin/python
-# -*- coding: UTF-8 -*-
-
-import numpy as np
-import os
-# import dependencies
-import time
-import matplotlib
-matplotlib.use('Agg')
-from matplotlib import pyplot as plt
-import networkx
-
-#Pytorch requirements
-import unicodedata
-import string
-import re
-import random
 import argparse
+import os
+import random
+import re
+import string
+import time
+import unicodedata
 
+import matplotlib
+import networkx
+import numpy as np
 import torch
 import torch.nn as nn
-from torch.nn import init
-from torch.autograd import Variable
-from torch import optim
 import torch.nn.functional as F
+from matplotlib import pyplot as plt
+from torch import optim
+from torch.autograd import Variable
+from torch.nn import init
+
 
 class Generator(object):
     def __init__(self, path_dataset):
@@ -190,7 +184,7 @@ class Generator(object):
         if is_training:
             dataset = self.data_train
         else:
-            datatset = self.data_test
+            dataset = self.data_test
         for b in range(num_samples):
             ind = np.random.randint(0, len(dataset))
             ww = torch.from_numpy(dataset[ind]['WW'])
@@ -201,7 +195,6 @@ class Generator(object):
             x_noise = torch.from_numpy(dataset[ind]['x_noise'])
             WW_noise[b] = ww_noise
             X_noise[b] = x_noise
-        
         WW = Variable(WW, volatile=volatile)
         X = Variable(X, volatile=volatile)
         WW_noise = Variable(WW_noise, volatile=volatile)
@@ -211,6 +204,7 @@ class Generator(object):
             return [WW.cuda(), X.cuda()], [WW_noise.cuda(), X_noise.cuda()]
         else:
             return [WW, X], [WW_noise, X_noise]
+
 
 if __name__ == '__main__':
     ###################### Test Generator module ##############################
