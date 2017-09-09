@@ -57,7 +57,6 @@ class Generator(object):
             WW[:, :, 0] = np.eye(N)
             for j in range(self.J):
                 WW[:, :, j + 1] = QQ.copy()
-                # QQ = np.dot(QQ, QQ)
                 QQ = np.minimum(np.dot(QQ, QQ), np.ones(QQ.shape))
             WW[:, :, self.J] = D
             WW[:, :, self.J + 1] = np.ones((N, N)) * 1.0 / float(N)
