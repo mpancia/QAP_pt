@@ -1,30 +1,11 @@
-#!/usr/bin/python
-# -*- coding: UTF-8 -*-
-
-import numpy as np
-import os
-# import dependencies
 from data_generator import Generator
 from model import Siamese_GNN
 from Logger import Logger
 import time
-import matplotlib
-matplotlib.use('Agg')
-from matplotlib import pyplot as plt
-
-#Pytorch requirements
-import unicodedata
-import string
-import re
-import random
 import argparse
-
 import torch
 import torch.nn as nn
-from torch.nn import init
 from torch.autograd import Variable
-from torch import optim
-import torch.nn.functional as F
 
 parser = argparse.ArgumentParser()
 
@@ -81,10 +62,12 @@ criterion = nn.CrossEntropyLoss()
 template1 = '{:<10} {:<10} {:<10} {:<15} {:<10} {:<10} {:<10} '
 template2 = '{:<10} {:<10.5f} {:<10.5f} {:<15} {:<10} {:<10} {:<10.3f} \n'
 
+
 def compute_loss(pred, labels):
     pred = pred.view(-1, pred.size()[-1])
     labels = labels.view(-1)
     return criterion(pred, labels)
+
 
 def train(siamese_gnn, logger, gen):
     labels = (Variable(torch.arange(0, gen.N).unsqueeze(0).expand(batch_size,
@@ -117,6 +100,7 @@ def train(siamese_gnn, logger, gen):
             logger.save_model(siamese_gnn)
             logger.save_results()
     print('Optimization finished.')
+
 
 if __name__ == '__main__':
     logger = Logger(args.path_logger)
